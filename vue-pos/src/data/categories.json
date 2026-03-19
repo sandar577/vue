@@ -1,0 +1,26 @@
+[
+  {
+    "category_id": 1,
+    "name": "Beer",
+    "description": "Alcoholic beer beverages",
+    "is_active": true
+  },
+  {
+    "category_id": 2,
+    "name": "Coffee",
+    "description": "Hot and iced coffee drinks",
+    "is_active": true
+  },
+  {
+    "category_id": 3,
+    "name": "Juice",
+    "description": "Fresh fruit juices and drinks",
+    "is_active": true
+  },
+  {
+    "category_id": 4,
+    "name": "Food",
+    "description": "Meals and snacks",
+    "is_active": true
+  }
+]

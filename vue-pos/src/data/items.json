@@ -1,0 +1,35 @@
+[
+  { "item_id": 1, "name": "Tiger Beer Can", "price": 4500, "barcode": "BEER-001", "category_id": 1, "stock_quantity": 120 , "image" : "/images/tiger.png"},
+  { "item_id": 2, "name": "Heineken Bottle", "price": 5000, "barcode": "BEER-002", "category_id": 1, "stock_quantity": 90, "image" : "/images/tiger.png" },
+  { "item_id": 3, "name": "Myanmar Beer Bottle", "price": 3500, "barcode": "BEER-003", "category_id": 1, "stock_quantity": 150, "image" : "/images/tiger.png" },
+  { "item_id": 4, "name": "ABC Stout", "price": 4200, "barcode": "BEER-004", "category_id": 1, "stock_quantity": 80 , "image" : "/images/tiger.png"},
+  { "item_id": 5, "name": "Carlsberg Can", "price": 4800, "barcode": "BEER-005", "category_id": 1, "stock_quantity": 100, "image" : "/images/tiger.png" },
+  { "item_id": 6, "name": "Chang Beer", "price": 4600, "barcode": "BEER-006", "category_id": 1, "stock_quantity": 70 , "image" : "/images/tiger.png"},
+
+  { "item_id": 7, "name": "Black Coffee", "price": 2500, "barcode": "COF-001", "category_id": 2, "stock_quantity": 200, "image" : "/images/tiger.png" },
+  { "item_id": 8, "name": "Latte", "price": 3500, "barcode": "COF-002", "category_id": 2, "stock_quantity": 150 , "image" : "/images/tiger.png"},
+  { "item_id": 9, "name": "Cappuccino", "price": 3800, "barcode": "COF-003", "category_id": 2, "stock_quantity": 140, "image" : "/images/tiger.png" },
+  { "item_id": 10, "name": "Mocha", "price": 4200, "barcode": "COF-004", "category_id": 2, "stock_quantity": 130 , "image" : "/images/tiger.png"},
+  { "item_id": 11, "name": "Americano", "price": 3000, "barcode": "COF-005", "category_id": 2, "stock_quantity": 160 , "image" : "/images/tiger.png"},
+  { "item_id": 12, "name": "Iced Coffee", "price": 3200, "barcode": "COF-006", "category_id": 2, "stock_quantity": 170, "image" : "/images/tiger.png" },
+
+  { "item_id": 13, "name": "Orange Juice", "price": 2800, "barcode": "JUI-001", "category_id": 3, "stock_quantity": 110 , "image" : "/images/tiger.png"},
+  { "item_id": 14, "name": "Apple Juice", "price": 2700, "barcode": "JUI-002", "category_id": 3, "stock_quantity": 100 , "image" : "/images/tiger.png"},
+  { "item_id": 15, "name": "Mango Juice", "price": 3000, "barcode": "JUI-003", "category_id": 3, "stock_quantity": 120 , "image" : "/images/tiger.png"},
+  { "item_id": 16, "name": "Pineapple Juice", "price": 2900, "barcode": "JUI-004", "category_id": 3, "stock_quantity": 90, "image" : "/images/tiger.png" },
+  { "item_id": 17, "name": "Watermelon Juice", "price": 2600, "barcode": "JUI-005", "category_id": 3, "stock_quantity": 95 , "image" : "/images/tiger.png"},
+  { "item_id": 18, "name": "Lemon Juice", "price": 2400, "barcode": "JUI-006", "category_id": 3, "stock_quantity": 85 , "image" : "/images/tiger.png"},
+
+  { "item_id": 19, "name": "Fried Rice", "price": 4500, "barcode": "FOOD-001", "category_id": 4, "stock_quantity": 60 , "image" : "/images/tiger.png"},
+  { "item_id": 20, "name": "Chicken Fried Rice", "price": 5500, "barcode": "FOOD-002", "category_id": 4, "stock_quantity": 50, "image" : "/images/tiger.png" },
+  { "item_id": 21, "name": "Noodle Soup", "price": 4000, "barcode": "FOOD-003", "category_id": 4, "stock_quantity": 70 , "image" : "/images/tiger.png"},
+  { "item_id": 22, "name": "Fried Noodles", "price": 4200, "barcode": "FOOD-004", "category_id": 4, "stock_quantity": 65 , "image" : "/images/tiger.png"},
+  { "item_id": 23, "name": "Chicken Curry", "price": 6000, "barcode": "FOOD-005", "category_id": 4, "stock_quantity": 55 , "image" : "/images/tiger.png"},
+  { "item_id": 24, "name": "Pork Curry", "price": 6200, "barcode": "FOOD-006", "category_id": 4, "stock_quantity": 45 , "image" : "/images/tiger.png"},
+  { "item_id": 25, "name": "Vegetable Fried Rice", "price": 4200, "barcode": "FOOD-007", "category_id": 4, "stock_quantity": 75, "image" : "/images/tiger.png" },
+  { "item_id": 26, "name": "Grilled Chicken", "price": 6500, "barcode": "FOOD-008", "category_id": 4, "stock_quantity": 40 , "image" : "/images/tiger.png"},
+  { "item_id": 27, "name": "Spring Rolls", "price": 3000, "barcode": "FOOD-009", "category_id": 4, "stock_quantity": 80, "image" : "/images/tiger.png" },
+  { "item_id": 28, "name": "French Fries", "price": 2800, "barcode": "FOOD-010", "category_id": 4, "stock_quantity": 90, "image" : "/images/tiger.png" },
+  { "item_id": 29, "name": "Beef Curry", "price": 6800, "barcode": "FOOD-011", "category_id": 4, "stock_quantity": 35 , "image" : "/images/tiger.png"},
+  { "item_id": 30, "name": "Fish Curry", "price": 6400, "barcode": "FOOD-012", "category_id": 4, "stock_quantity": 40 , "image" : "/images/tiger.png"}
+]
