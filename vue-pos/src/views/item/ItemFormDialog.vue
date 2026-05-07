@@ -4,6 +4,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useCategoryStore } from '@/stores/categoryStore'
 import { Size, Type } from '@/constants/common'
 import BaseDialog from '@/components/BaseDialog.vue'
+import { asset } from '@/utils/asset'
 
 const formItem = ref<Item | null>()
 const categories = ref<Category[]>([])
@@ -58,7 +59,7 @@ const checkAndLoadItem = () => {
       <form @submit.prevent="emit('onSave', formItem)">
         <div class="space-y-6 mt-3">
           <div class="flex justify-center items-center">
-            <img :src="formItem.image" class="w-30 h-30 object-contain" />
+            <img :src="asset(formItem.image)" class="w-30 h-30 object-contain" />
           </div>
           <div class="grid grid-cols-6 items-center gap-4">
             <label for="name" class="col-span-2 text-sm font-medium text-gray-900"> Name </label>

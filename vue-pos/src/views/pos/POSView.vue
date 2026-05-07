@@ -8,6 +8,7 @@ import { useCategoryStore } from '@/stores/categoryStore'
 import CommonButton from '@/components/CommonButton.vue'
 import OrderPanel from '@/views/pos/OrderPanel.vue'
 import { Size, Type } from '@/constants/common'
+import { asset } from '@/utils/asset'
 
 const itemStore = useItemStore()
 const orderStore = useOrderStore()
@@ -144,7 +145,7 @@ const resetOrder = () => {
           :class="isInCart(item) ? 'border-2 border-blue-600' : ''"
           @click="() => addToCart(item)"
         >
-          <img class="h-24 w-full object-contain rounded mb-2" :src="item.image" />
+          <img class="h-24 w-full object-contain rounded mb-2" :src="asset(item.image)" />
           <div class="font-medium text-sm">
             {{ item.name }}
           </div>

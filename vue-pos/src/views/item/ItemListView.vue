@@ -13,6 +13,7 @@ import { storeToRefs } from 'pinia'
 import { useCategoryStore } from '@/stores/categoryStore'
 import { Size, Type } from '@/constants/common'
 import { ItemFilter } from '@/models/ItemFilter'
+import { asset } from '@/utils/asset'
 
 const itemStore = useItemStore()
 const { filteredItems } = storeToRefs(itemStore)
@@ -46,7 +47,7 @@ const headers = [
     title: 'Image',
     isComponent: true,
     transform: (obj: Item) => {
-      return h('img', { src: obj.image, class: 'w-10 h-10' })
+      return h('img', { src: asset(obj.image), class: 'w-10 h-10' })
     },
   },
   { key: 'name', title: 'Name' },
