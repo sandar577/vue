@@ -1,0 +1,28 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+**/.DS_Store
+src copy/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.tsbuildinfo
+
+.eslintcache
+
+# Vitest
+__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
