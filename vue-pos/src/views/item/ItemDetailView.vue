@@ -72,9 +72,6 @@ const saveItem = () => {
 <template>
   <CustomCard v-if="item" :route="'/items'" :title="'Item ID: ' + (isNew ? '#' : item.item_id)">
     <template v-if="!isNew" #header>
-      <!-- <button class="bg-blue-600 text-white px-3 py-1 rounded" @click="$router.push('/items/new')">
-        + New
-      </button> -->
       <CommonButton :btnType="Type.primary" :size="Size.sm" @click="$router.push('/items/new')">
         + New
       </CommonButton>
@@ -138,13 +135,6 @@ const saveItem = () => {
             <CommonButton :htmlType="'submit'" :btnType="Type.secondary" :size="Size.md">{{
               loading ? 'Saving...' : isNew ? 'Save' : 'Update'
             }}</CommonButton>
-
-            <!-- <button class="btn btn-primary bg-red-600" @click="() => $router.push('/items')">
-              Cancel
-            </button>
-            <button type="submit" class="btn btn-primary bg-green-600">
-              {{ loading ? 'Saving...' : isNew ? 'Save' : 'Update' }}
-            </button> -->
           </div>
         </div>
       </div>

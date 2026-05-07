@@ -9,7 +9,7 @@ const router = createRouter({
     },
     {
       path: '/menu',
-      component: () => import('@/views/POSView.vue'),
+      component: () => import('@/views/pos/POSView.vue'),
     },
     {
       path: '/history',
@@ -19,14 +19,15 @@ const router = createRouter({
       path: '/items',
       component: () => import('@/views/item/ItemListView.vue'),
     },
-    {
-      path: '/history/:id',
-      component: () => import('@/views/order/OrderDetailView.vue'),
-    },
-    {
-      path: '/items/:id',
-      component: () => import('@/views/item/ItemDetailView.vue'),
-    },
+    // {
+    //   path: '/history/:id',
+    //   component: () => import('@/views/order/OrderDetailView.vue'),
+    // },
+    // {
+    //   path: '/items/:id',
+    //   component: () => import('@/views/item/ItemFormDialog.vue'),
+    // },
+
     {
       path: '/charts',
       component: () => import('@/views/report/ChartView.vue'),

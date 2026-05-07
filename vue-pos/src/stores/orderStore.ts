@@ -1,3 +1,4 @@
+import { OrderFilter } from './../models/OrderFilter'
 import { STORAGE_KEYS } from '@/constants/common'
 import { Order } from '@/models/Order'
 import { defineStore } from 'pinia'
@@ -7,14 +8,18 @@ import { useCategoryStore } from './categoryStore'
 export const useOrderStore = defineStore('order', {
   state: () => ({
     ordersById: {} as Record<number, Order>,
+    orderFilter: {} as OrderFilter,
   }),
   persist: true,
   actions: {
-    loadOrder() {
+    loadOrder(orderFilter?: OrderFilter) {
       const data = localStorage.getItem(STORAGE_KEYS.ORDERS)
       const tempData = JSON.parse(data || '{}')
       if (Object.keys(tempData).length > 0) {
         this.ordersById = tempData.ordersById
+      }
+      if (orderFilter) {
+        this.ordersById = Object.values(tempData.ordersById)
       }
     },
     addOrder(order: Order) {
@@ -73,11 +78,38 @@ export const useOrderStore = defineStore('order', {
           .splice(0, limit),
       )
     },
+    setFilters(orderFilter: OrderFilter) {
+      this.orderFilter = { ...orderFilter }
+    },
   },
   getters: {
     orders: (state) => Object.values(state.ordersById),
     getOrder(state) {
       return (orderId: number) => state.ordersById[orderId]
+    },
+    filteredOrders: (state) => {
+      const orders = Object.values(state.ordersById)
+      const filter = state.orderFilter
+
+      return orders.filter((order) => {
+        if (filter.order_id && order.order_id !== Number(filter.order_id)) {
+          return false
+        }
+        if (
+          filter.order_item &&
+          !order.items.some((item) => item.name.startsWith(filter.order_item)) &&
+          !order.items.some((item) => item.item_id === Number(filter.order_item))
+        ) {
+          return false
+        }
+        if (filter.startDate && new Date(order.created_at) <= new Date(filter.startDate)) {
+          return false
+        }
+        if (filter.endDate && new Date(order.created_at) <= new Date(filter.endDate)) {
+          return false
+        }
+        return true
+      })
     },
   },
 })

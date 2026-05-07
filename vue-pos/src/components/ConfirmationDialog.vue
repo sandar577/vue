@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { CircleAlert } from 'lucide-vue-next'
-import CommonButton from './CommonButton.vue'
+import CommonButton from '@/components/CommonButton.vue'
 import { Size, Type } from '@/constants/common'
-const open = ref(true)
 interface Props {
   title: string
   action: string
@@ -17,8 +15,8 @@ const emit = defineEmits<{
 </script>
 <template>
   <div>
-    <TransitionRoot as="template" :show="open">
-      <Dialog class="relative z-10" @close="open = false">
+    <TransitionRoot as="template" :show="true">
+      <Dialog class="relative z-10" @close="emit('onConfirm', false)">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"

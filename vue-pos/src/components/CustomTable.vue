@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import CommonButton from '@/components/CommonButton.vue'
+import { Size, Type } from '@/constants/common'
 interface Props {
   headers: any[]
   data: any[]
@@ -8,13 +10,11 @@ const props = defineProps<Props>()
 </script>
 <template>
   <div class="flex flex-1 flex-col overflow-auto px-4 pt-1">
-    <div class="flex justify-end mb-2">
+    <div class="flex items-center justify-between mb-2 gap-4">
       <slot name="actions"></slot>
-      <span
-        class="inline-block bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full shadow-sm text-sm"
-      >
+      <CommonButton :btnType="Type.primary" :size="Size.sm">
         Total Count: {{ props.data.length }}
-      </span>
+      </CommonButton>
     </div>
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">

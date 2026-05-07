@@ -1,23 +1,26 @@
 <script setup lang="ts">
 import { Order } from '@/models/Order'
 import { onMounted, h, ref } from 'vue'
-import { RouterLink } from 'vue-router'
 import { Trash2 } from 'lucide-vue-next'
 import CustomTable from '@/components/CustomTable.vue'
 import { useOrderStore } from '@/stores/orderStore'
 import { storeToRefs } from 'pinia'
-import CustomModal from '@/components/CustomModal.vue'
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
+import OrderDetailDialog from '@/views/order/OrderDetailDialog.vue'
+import OrderSearchPanel from '@/views/order/OrderSearchPanel.vue'
+import { formatDate } from '@/utils/dateFormatter'
+import { OrderFilter } from '@/models/OrderFilter'
 
 const isVisible = ref(false)
-const orderToDelete = ref({} as Order)
+const orderToDelete = ref<Order>()
+const selectedOrder = ref<Order>()
+const showOrderDialog = ref(false)
 
 const orderStore = useOrderStore()
-const { orders } = storeToRefs(orderStore)
-
+const { filteredOrders } = storeToRefs(orderStore)
 onMounted(() => {
   orderStore.loadOrder()
-  //  orders = orderRef.orders.value
-  console.log(orders)
+  orderStore.setFilters({} as OrderFilter)
 })
 
 const statusStyles: { [prop: string]: string } = {
@@ -27,21 +30,21 @@ const statusStyles: { [prop: string]: string } = {
   refunded: 'bg-gray-100 text-gray-700',
 }
 
-const formatDate = (date: string) => {
-  const d = new Date(date)
-  return d.toLocaleString()
-}
-
 const deleteOrder = (order: Order) => {
   isVisible.value = true
   orderToDelete.value = order
 }
 
-const handleConfirm = (value: boolean) => {
+const handleConfirmation = (isYes: boolean) => {
   isVisible.value = false
-  if (value) {
-    orderStore.removeOrder(orderToDelete.value)
+  if (isYes) {
+    orderStore.removeOrder(orderToDelete.value!)
   }
+}
+
+const loadOrderDialog = (order: Order) => {
+  selectedOrder.value = order
+  showOrderDialog.value = true
 }
 
 const headers = [
@@ -51,9 +54,9 @@ const headers = [
     isComponent: true,
     transform: (obj: Order) => {
       return h(
-        RouterLink,
-        { class: 'font-medium text-blue-600', to: `/history/${obj.order_id}` },
-        () => '#' + obj.order_id,
+        'span',
+        { class: 'font-medium text-blue-600 cursor-pointer', onClick: () => loadOrderDialog(obj) },
+        '#' + obj.order_id,
       )
     },
   },
@@ -77,8 +80,22 @@ const headers = [
     },
   },
   {
+    key: 'total_qty',
+    title: 'Total Qty',
+    isComponent: true,
+    transform: (obj: Order) => {
+      return h(
+        'div',
+        {
+          class: 'max-w-xs truncate',
+        },
+        obj.items.reduce((sum, item) => sum + item.quantity, 0),
+      )
+    },
+  },
+  {
     key: 'total_amount',
-    title: 'Total',
+    title: 'Total Amount',
   },
   {
     key: 'status',
@@ -111,15 +128,26 @@ const headers = [
     },
   },
 ]
+
+const onSearch = (orderFilter: OrderFilter) => {
+  orderStore.setFilters(orderFilter)
+}
 </script>
 <template>
-  <CustomTable :data="orders" :headers="headers" :id="'order_id'"></CustomTable>
-  <CustomModal
+  <CustomTable :data="filteredOrders" :headers="headers" :id="'order_id'">
+    <template #actions> <OrderSearchPanel @onSearch="onSearch"></OrderSearchPanel> </template
+  ></CustomTable>
+  <ConfirmationDialog
     v-if="isVisible"
     :title="'Delete Order'"
     :action="'delete'"
     :actionBtnLabel="'Confirm'"
-    @onConfirm="handleConfirm"
-  ></CustomModal>
+    @onConfirm="handleConfirmation"
+  ></ConfirmationDialog>
+  <OrderDetailDialog
+    v-if="showOrderDialog"
+    :order="selectedOrder"
+    @onCancel="showOrderDialog = false"
+  ></OrderDetailDialog>
 </template>
 <style scoped></style>

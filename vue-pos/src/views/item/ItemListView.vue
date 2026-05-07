@@ -1,22 +1,28 @@
 <script lang="ts" setup>
 import CommonButton from '@/components/CommonButton.vue'
 import CustomTable from '@/components/CustomTable.vue'
-import CustomModal from '@/components/CustomModal.vue'
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
+import ItemFormDialog from '@/views/item/ItemFormDialog.vue'
+import ItemSearchPanel from '@/views/item/ItemSearchPanel.vue'
+import { createToaster } from '@meforma/vue-toaster'
 
 import { ref, h, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
-import router from '@/router'
 import { Trash2, Edit2 } from 'lucide-vue-next'
 import { useItemStore } from '@/stores/itemStore'
 import { storeToRefs } from 'pinia'
 import { useCategoryStore } from '@/stores/categoryStore'
 import { Size, Type } from '@/constants/common'
+import { ItemFilter } from '@/models/ItemFilter'
 
 const itemStore = useItemStore()
-const { items } = storeToRefs(itemStore)
+const { filteredItems } = storeToRefs(itemStore)
 const categoryStore = useCategoryStore()
 const isVisible = ref(false)
-const itemToDelete = ref({} as Item)
+const itemToDelete = ref<Item>()
+const showDialog = ref(false)
+const selectedItem = ref<Item>()
+const loading = ref(false)
+const toaster = createToaster({})
 
 const categories = ref<Category[]>([])
 const headers = [
@@ -26,9 +32,12 @@ const headers = [
     isComponent: true,
     transform: (obj: Item) => {
       return h(
-        RouterLink,
-        { class: 'font-medium text-blue-600', to: `/items/${obj.item_id}` },
-        () => '#' + obj.item_id,
+        'span',
+        {
+          class: 'text-blue-600 font-medium cursor-pointer',
+          onClick: () => loadItemDialog(obj),
+        },
+        '#' + obj.item_id,
       )
     },
   },
@@ -72,7 +81,7 @@ const headers = [
     isIcon: true,
     transform: (obj: Item) => {
       return h(Edit2, {
-        onClick: () => router.push(`/items/${obj.item_id}`),
+        onClick: () => loadItemDialog(obj),
         class:
           'rounded-md hover:bg-gray-200 cursor-pointer hover:text-green-600 flex items-center justify-center',
         size: 17,
@@ -85,40 +94,67 @@ onMounted(() => {
   itemStore.loadItem()
   categoryStore.loadCategory()
   categories.value = categoryStore.categories
+  itemStore.setFilter({} as ItemFilter)
 })
+
+const loadItemDialog = (item?: Item) => {
+  showDialog.value = true
+  selectedItem.value = item
+}
+
+const saveItem = (item: Item) => {
+  loading.value = true
+  setTimeout(() => {
+    if (item.item_id === 0) {
+      itemStore.addItem(item)
+    } else {
+      itemStore.updateItem(item)
+    }
+    loading.value = false
+    toaster.success('Successfully saved!', {
+      position: 'top',
+    })
+    showDialog.value = false
+  }, 500)
+}
 
 const deleteItem = (item: Item) => {
   isVisible.value = true
   itemToDelete.value = item
-  //itemStore.removeItem(item)
 }
 
-const handleConfirm = (value: boolean) => {
+const handleConfirmation = (isYes: boolean) => {
   isVisible.value = false
-  if (value) {
-    itemStore.removeItem(itemToDelete.value)
+  if (isYes) {
+    itemStore.removeItem(itemToDelete.value!)
   }
+}
+
+const onSearch = (itemFilter: ItemFilter) => {
+  itemStore.setFilter(itemFilter)
 }
 </script>
 <template>
-  <CustomTable :data="items" :headers="headers" :id="'item_id'">
+  <CustomTable :data="filteredItems" :headers="headers" :id="'item_id'">
     <template #actions>
-      <CommonButton
-        :btnType="Type.primary"
-        :size="Size.sm"
-        :class="'mx-1'"
-        @click="$router.push('/items/new')"
-      >
+      <ItemSearchPanel @onSearch="onSearch"></ItemSearchPanel>
+      <CommonButton :btnType="Type.primary" :size="Size.sm" @click="loadItemDialog()">
         + New
       </CommonButton>
-      <CustomModal
+      <ConfirmationDialog
         v-if="isVisible"
         :title="'Delete Item'"
         :action="'delete'"
         :actionBtnLabel="'Confirm'"
-        @onConfirm="handleConfirm"
-      ></CustomModal>
+        @onConfirm="handleConfirmation"
+      ></ConfirmationDialog>
     </template>
   </CustomTable>
+  <ItemFormDialog
+    v-if="showDialog"
+    :item="selectedItem"
+    @onCancel="showDialog = false"
+    @onSave="saveItem"
+  ></ItemFormDialog>
 </template>
 <style></style>
